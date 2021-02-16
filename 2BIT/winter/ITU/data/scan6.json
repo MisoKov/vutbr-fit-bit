@@ -1,0 +1,70 @@
+{
+  "networks" :[
+    {
+      "channel": 6,
+      "frequency": 2.4,
+      "sigstr": 62,
+      "ssid": "nazov0"
+    },
+    {
+      "channel": 6,
+      "frequency": 2.4,
+      "sigstr": 60,
+      "ssid": "nazov1"
+    },
+    {
+      "channel": 6,
+      "frequency": 2.4,
+      "sigstr": 60,
+      "ssid": "nazov2"
+    },
+    {
+      "channel": 4,
+      "frequency": 2.4,
+      "sigstr": 50,
+      "ssid": "nazov3"
+    },
+    {
+      "channel":12,
+      "frequency": 2.4,
+      "sigstr": 10,
+      "ssid": "nazov4"
+    },
+    {
+      "channel": 3,
+      "frequency": 2.4,
+      "sigstr": 40,
+      "ssid": "nazov5"
+    },
+    {
+      "channel": 3,
+      "frequency": 2.4,
+      "sigstr": 20,
+      "ssid": "nazov6"
+    },
+    {
+      "channel": 8,
+      "frequency": 2.4,
+      "sigstr": 80,
+      "ssid": "nazov7"
+    },
+    {
+      "channel": 7,
+      "frequency": 2.4,
+      "sigstr": 33,
+      "ssid": "nazov8"
+    },
+    {
+      "channel": 8,
+      "frequency": 2.4,
+      "sigstr": 90,
+      "ssid": "nazov9"
+    },
+    {
+      "channel": 11,
+      "frequency": 2.4,
+      "sigstr": 50,
+      "ssid": "nazov10"
+    }
+  ]
+}
