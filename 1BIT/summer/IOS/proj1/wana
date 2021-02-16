@@ -1,0 +1,290 @@
+#!/bin/sh
+
+#/*
+# *	File:	Project 1 IOS - wana
+# *	Author:	Michal Koval - xkoval17
+# * Date:	2019-03-29
+# */
+
+POSIXLY_CORRECT=yes
+
+#spracovanie argumentov - filtre a prikaz
+while [ $# -gt 0 ]
+do
+	case $1 in
+		-a) if [ -n "$2" ]
+			then
+				a=$2
+				shift
+			else
+				echo "no DATETIME was entered for option $1"
+				exit 1
+			fi ;;
+		-b) if [ -n "$2" ]
+			then
+				b=$2
+				shift
+			else
+				echo "no DATETIME was entered for option $1"
+				exit 1
+			fi ;;
+		-ip) if [ -n "$2" ]
+		 	 then
+				ip=$2
+				shift
+			 else
+				echo "no IPADDR was entered for option $1"
+				exit 1
+   			 fi ;;
+		-uri) if [ -n "$2" ]
+ 			  then
+				uri=$2
+				shift
+			  else
+				echo "no URI was entered for option $1"
+				exit 1
+			  fi ;;
+		list-ip) cmd=$1; shift; break ;;
+		list-hosts) cmd=$1; shift; break ;;
+		list-uri) cmd=$1; shift; break ;;
+		hist-ip) cmd=$1; shift; break ;;
+		hist-load) cmd=$1; shift; break ;;
+		*) break
+	esac
+	shift
+done
+
+#spracovanie argumentov - logy
+logCount=0
+while [ $# -gt 0 ]
+do
+	if [ -f "$1" ]
+	then
+		logCount=$((logCount + 1))
+		case "$1" in 
+			*.gz) logs="${logs}$(gunzip -c "$1")" ;;
+			*) logs="${logs}$(cat "$1")" ;;
+		esac
+	else
+		echo "file: $1 was not found"
+		exit 1
+	fi
+	shift
+done 
+#ulozenie standardneho vstupu do logov ak neboli nacitane ziadne subory
+if [ $logCount -eq 0 ];then
+	logs=$( cat )
+fi
+
+# aplikovanie filtrov
+# -a DATETIME
+if [ "$a" ]; then
+	# kontrola formatu casu
+	echo "$a" | grep -Eq "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$"
+	if [ "$?" -eq 1 ];then
+		echo "incorrect DATETIME entered for filer -a"
+		exit 1
+	fi	
+	# uprava casu a na dlhe cislo
+	a=$( echo "$a" | sed 's/[\:\-]//g' | sed 's/ //g' )
+	aLen="${#a}"
+	while [ "$aLen" -lt 14 ]
+	do
+		a="${a}0"
+		aLen=$((aLen + 1))
+	done
+	# uprava casov logv do porovnatelnej hodnoty s a
+	casy=$(	echo "$logs" | sed 's/Jan/01/' | sed 's/Feb/02/' | sed 's/Mar/03/' | sed 's/Apr/04/' | sed 's/May/05/' | sed 's/Jun/06/' | sed 's/Jul/07/' | sed 's/Aug/08/' | sed 's/Sep/09/' | sed 's/Oct/10/' | sed 's/Nov/11/' | sed 's/Dec/12/' | awk -F"[" '{print $2}' | awk -F" +" '{print $1}' | sed 's/:/\//' | awk -F"/" '{printf "%s%s%s%s\n",$3,$2,$1,$4}' | sed 's/://g' )
+	# vytriedenie logov
+	export index=1
+	logs=$( echo "$casy" | while IFS= read -r line
+		do
+		if [ "$line" -gt "$a" ]; then
+			echo "$logs" | sed "${index}q;d"
+		fi
+		index=$((index + 1))
+		done )
+fi
+
+# -b DATETIME
+if [ "$b" ]; then
+	# kontrola formatu casu
+	echo "$b" | grep -Eq "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$"
+	if [ $? -eq 1 ];then
+		echo "incorrect DATETIME entered for filer -b"
+		exit 1
+	fi	
+	# uprava casu a na dlhe cislo
+	b=$( echo "$b" | sed 's/[\:\-]//g' | sed 's/ //g' )
+	bLen="${#b}"
+	while [ "$bLen" -lt 14 ]
+	do
+		b="${b}0"
+		bLen=$((bLen + 1))
+	done
+	# uprava casov logv do porovnatelnej hodnoty s b
+	casy=$(	echo "$logs" | sed 's/Jan/01/' | sed 's/Feb/02/' | sed 's/Mar/03/' | sed 's/Apr/04/' | sed 's/May/05/' | sed 's/Jun/06/' | sed 's/Jul/07/' | sed 's/Aug/08/' | sed 's/Sep/09/' | sed 's/Oct/10/' | sed 's/Nov/11/' | sed 's/Dec/12/' | awk -F"[" '{print $2}' | awk -F" +" '{print $1}' | sed 's/:/\//' | awk -F"/" '{printf "%s%s%s%s\n",$3,$2,$1,$4}' | sed 's/://g' )
+	# vytriedenie logov
+	export index=1
+	logs=$( echo "$casy" | while IFS= read -r line
+		do
+		if [ "$line" -lt "$b" ]; then
+			echo "$logs" | sed "${index}q;d"
+		fi
+		index=$((index + 1))
+		done )
+fi
+
+# -ip IPADDR
+if [ "$ip" ]; then
+	#kontrola formatu ip
+	# IPV6
+	echo "$ip" | grep -Eq "^[0-9|a-f]{0,4}:[0-9|a-f]{0,4}:[0-9|a-f]{0,4}:[0-9|a-f]{0,4}:[0-9|a-f]{0,4}:[0-9|a-f]{0,4}:[0-9|a-f]{0,4}$"
+	if [ $? -eq 1 ];then
+		# IPV4
+		echo "$ip" | grep -Eq "^[0-9]{0,3}.[0-9]{0,3}.[0-9]{0,3}.[0-9]{0,3}$"
+		if [ "$?" -eq 1 ];then
+			echo "incorrect IP adress entered for filer -ip"
+			exit 1
+		fi	
+	fi
+	# ziskanie ip z logov
+	ips=$( echo "$logs" | awk -F" - -" '{print $1}')
+	# triedenie podla zhodnych ip
+	export index=1
+	logs=$( echo "$ips" | while IFS= read -r line
+		do
+		if [ "$ip" = "$line" ]; then
+			echo "$logs" | sed "${index}q;d"
+		fi
+		index=$((index + 1))
+		done )
+fi
+
+# -uri URI
+if [ "$uri" ]; then
+	# ziskanie vsetkych uri
+	uris=$( echo "$logs" | awk -F"(GET |POST |HEAD |TRACE |DELETE |CONNECT |PUT |OPTIONS )" '{print $2}' | awk -F" HTTP" '{print $1}' )
+	# vytvorenie noveho logs iba zhodnych so zadanym uri
+	export index=1
+	logs=$( echo "$uris" | while IFS= read -r line
+		do
+		if echo "$line" | grep -Eq "$uri" ;then
+			echo "$logs" | sed "${index}q;d"
+		fi	
+		index=$((index + 1))
+		done )
+fi
+
+# ziadne prikazy - vypis logov
+if [ -z "$cmd" ]; then
+	echo "$logs"
+	exit 0
+fi
+
+# vykonanie prikazpv
+case $cmd in
+		"list-ip") echo "$logs" | awk -F" - - " ' {printf "%s\n",$1} ' | sort | uniq ;;
+		list-hosts) ips=$( echo "$logs" | awk -F" - - " ' {print $1} ' | sort | uniq )
+					hosts=$( echo "$ips" | while IFS= read -r line
+								  do
+									host "$line" | grep -q "pointer "
+									exitcode=$?
+									if [ $exitcode -eq 0 ]
+									then
+										host "$line" | awk -F"pointer " '{print $2}'
+									else
+										echo "$line"
+									fi
+								  done )
+					echo "$hosts";;
+		list-uri) echo "$logs" | awk -F"(GET |POST |HEAD |TRACE |DELETE |CONNECT |PUT |OPTIONS )" '{print $2}' | sed '/^$/d' | awk -F" HTTP" '{print $1}' | sort | uniq ;;
+		hist-ip) ips=$( echo "$logs" | awk -F" - - " ' {print $1} ' | sort )
+				 first=1
+				 numOfLines=$( echo "$ips" | grep -c '^' )
+				 export numOfLines
+				 echo "$ips" | while IFS= read -r line
+								  do
+									linesCount=$((linesCount + 1))
+									if [ $first -eq 1 ]; then
+										currentIP="$line"
+										counter=1
+										first=0
+									elif [ "$line" = "$currentIP" ]; then
+										counter=$((counter + 1))
+									else
+										echo "$counter $currentIP"
+										currentIP="$line"
+										counter=1
+									fi
+									# vypisanie posledneho riadku
+									if [ "$linesCount" -eq "$numOfLines" ]; then
+										echo "$counter $currentIP"
+									fi
+								done | sort -r -g | awk -F" " '{printf "%s (%s): ",$2,$1; for(c=0;c<$1;c++) printf "#"; printf "\n"}'  ;;
+		hist-load) casy=$( echo "$logs" | sed 's/[\[\:\/]//g' | sed 's/]//g' | sed 's/Jan/01/' | sed 's/Feb/02/' | sed 's/Mar/03/' | sed 's/Apr/04/' | sed 's/May/05/' | sed 's/Jun/06/' | sed 's/Jul/07/' | sed 's/Aug/08/' | sed 's/Sep/09/' | sed 's/Oct/10/' | sed 's/Nov/11/' | sed 's/Dec/12/' | awk -F" - - " '{print $2}' | awk -F" +" '{print $1}' | sort)
+				   first=$( echo "$casy" | head -n 1 )
+				   casy=$( echo "$casy" | sed 's/.\{4\}/&-/' | sed 's/.\{2\}/&-/' | sed 's/.\{10\}/& /'  | sed 's/.\{15\}/&+/' | awk -F"+" '{print $1}' )
+				   numOfLines=$( echo "$casy" | grep -c '^' )
+				   export numOfLines
+				   echo "$casy" | while IFS= read -r line
+								  do
+									linesCount=$((linesCount + 1))
+									den=$( echo "$line" | awk -F" " '{print $1}' | awk -F"-" '{printf "%s-%s-%s",$3,$2,$1}' )
+									cas=$( echo "$line" | awk -F" " '{print $2}')
+									# porovnanie dna
+									if [ "$den" = "$currentDen" ]; then
+										# porovnanie casu
+										if [ "$cas" -lt $(( $(( currentCas + 1 )) * 100 )) ]; then
+											counter=$((counter + 1))
+										else
+											# priprava vypisu
+											if [ "$currentDen" ]; then
+												currentCas=$((currentCas * 100))
+												casLen=${#currentCas}
+												while [ "$casLen" -lt 4 ]
+												do
+													currentCas="0${currentCas}"
+													casLen=$((casLen + 1))
+												done
+												currentCas=$( echo "$currentCas" | sed 's/.\{2\}/&:/' )
+												echo "$counter $currentDen $currentCas"
+											fi
+											currentDen=$( echo "$line" | awk -F" " '{print $1}' | awk -F"-" '{printf "%s-%s-%s",$3,$2,$1}' )
+											currentCas=$( echo "$line" | awk -F" " '{print $2}' | sed s/^0// | sed s/^0// | sed s/^0//)
+											currentCas=$(( currentCas / 100 ))
+											counter=1
+										fi
+									else
+										# priprava vypisu
+										if [ "$currentDen" ]; then
+											currentCas=$((currentCas * 100))
+											casLen=${#currentCas}
+											while [ "$casLen" -lt 4 ]
+											do
+												currentCas="0${currentCas}"
+												casLen=${#currentCas}
+											done
+											currentCas=$( echo "$currentCas" | sed 's/.\{2\}/&:/' )
+											echo "$counter $currentDen $currentCas"
+										fi
+										currentDen=$( echo "$line" | awk -F" " '{print $1}' | awk -F"-" '{printf "%s-%s-%s",$3,$2,$1}' )
+										currentCas=$( echo "$line" | awk -F" " '{print $2}' | sed s/^0// | sed s/^0// | sed s/^0//)
+										currentCas=$(( currentCas / 100 ))
+										counter=1
+									fi
+									# vypisanie posledneho riadku
+									if [ $linesCount -eq "$numOfLines" ]; then
+										currentCas=$((currentCas * 100))
+										casLen=${#currentCas}
+										while [ "$casLen" -lt 4 ]
+										do
+											currentCas="0${currentCas}"
+											casLen=$((casLen + 1))
+										done
+										currentCas=$( echo "$currentCas" | sed 's/.\{2\}/&:/' )
+										echo "$counter $currentDen $currentCas"
+									fi
+								done | awk -F" " '{printf "%s %s (%s): ",$2,$3,$1; for(c=0;c<$1;c++) printf "#"; printf "\n"}'  ;;
+esac
+exit 0
