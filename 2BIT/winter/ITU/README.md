@@ -2,7 +2,7 @@
 ## Wifi Tracker
 **Obtained points**:<br>
 33/50
-```
+
 Společná část popisu:
 Týmové zadání projektu - jeden projekt v délce trvání celého semestru. Projekty řeší týmy o 3 členech. Každý člen týmu musí jasně zdokumentovat a obhájit svůj vlastní tvůrčí autorský přínos. Nastanou-li problémy v týmu během řešení projektu, včas konzultujte problém s garantem kurzu. Výsledné řešení musí demonstrovat pochopení problematiky tvorby GUI a velmi dobré znalosti ve vybrané implementační technologii. Technologie zmíněné v zadání projektu jsou pouze doporučené, nikoliv povinné. V technické zprávě (použijte tuto šablonu) a při obhajobě je nutno výběr implementačních technologií řádně vysvětlit.
 
@@ -29,4 +29,3 @@ Studenti ve své práci musí pracovat samostatně a tvůrčím způsobem. Za po
 Více informací k projektu je na wiki k předmětu.
 Popis varianty:
 Implementujte aplikaci ke sledovaní dostupných bezdrátových sítí v prostředí KDE. Aplikace by měla zobrazovat podrobné informace o nalezených sítích, tedy identifikaci sítě, kanálu, kvalitu signálu a čas prvního a posledního výskytu.  Uživatel by měl mít možnost sledovat aktuální kvalitu připojení v grafické podobě. Sledovaná data by měla jít uložit do databáze a k jejich sběru využijte standardních utilit OS Linux pro práci s bezdrátovými sítěmi. Aplikaci implementuje v toolkitu QT s využitím KDE libs v jazyce C++.
-```
