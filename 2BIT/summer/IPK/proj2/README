@@ -1,0 +1,32 @@
+# README
+# IPK project 2 - Packet Sniffer
+# Michal Koval - xkoval17, FIT VUT
+# 2.5.2020
+
+Program is used to sniff packets in promiscuos mode and print their contents to stdout.
+Writen in C99 for linux operating systems.
+
+Required library: pcap
+    - instalation: sudo apt-get install libpcap-dev
+Compilation using Makefile. Either run 'make', 'make all' or 'make sniffer'.
+Program has to be run with admin privileges to work properly.
+
+Running the program:
+ - make run : lists available devices
+ - sudo ./ipk-sniffer -i interface [-p port] [--tcp|-t] [--udp|-u] [-n num] [--help|-h]
+ 
+When no arguments are passed or option -i without interface prints available devices to stdout.
+Arguments:
+-i interface    - interface will be used for packet sniffing
+-p port         - if set only packets that have source or destination port same as argument port
+--tcp|-t        - if set only TCP packets will be caught
+--udp|-u        - if set only UPD packets will be caught
+-n num          - if set num number of packets will be caught, default 1
+--help|-h       - prints help text to stdout\n
+
+When error occurs one of the error codes defined in errors.h is returned and appropriate error message is printed to stdout.
+
+Knowns errors:
+IPV6 support is not fully implemented, only the hostname from IP resolving. But it wasn`t tested.
+When filter is set to UDP packets only, the sniffer gets stuck in cycle of resolving the address. Since every DNS packet that is send and recieved uses UDP. May also get stuck when catching both TCP and UDP. 
+ - to disable resolving of addresses for testing purposes uncomment line 166 (get_hostname() function)

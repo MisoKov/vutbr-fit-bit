@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program language="IPPcode20">
+  <instruction order="1" opcode="DEFVAR">
+    <arg4 type="var">GF@counter</arg4>
+  </instruction>
+</program>
