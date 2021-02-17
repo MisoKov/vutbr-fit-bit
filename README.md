@@ -44,4 +44,4 @@ Status: ongoing
 [IZV](https://github.com/MisoKov/vutbr-fit-bit/tree/main/3BIT/IZV): Data Analysis and Visualization in Python </br>
 [IMP](https://github.com/MisoKov/vutbr-fit-bit/tree/main/3BIT/IMP): ARM-FITkit3: Periodic Interrupt Timer </br>
 [ISA](https://github.com/MisoKov/vutbr-fit-bit/tree/main/3BIT/ISA): Discord Bot </br>
-[IIS](): Social network
+[IIS](https://github.com/ProsteMato/IIS): Social network
