@@ -16,28 +16,28 @@
 Status: ongoing 
 
 ### 1BIT winter
-[IUS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/winter/IUS) Magic World - IS design</br>
-[IZP](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/winter/IZP) Text processing, Iterational calculations, Data structures, Code documentation </br>
+[IUS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/winter/IUS): Magic World - IS design</br>
+[IZP](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/winter/IZP): Text processing, Iterational calculations, Data structures, Code documentation </br>
 
 ### 1BIT summer
-[IOS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/summer/IOS) Bash scripting, Semaphores </br>
-[INC](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/summer/INC) Acces Terminal </br>
-[IJC](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/summer/IJC) Stenographic decoder, Sieve of Eratosthenes, Wordcounter...</br>
-[IVS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/summer/IVS) Team project - Simple calculator in Python </br>
+[IOS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/summer/IOS): Bash scripting, Semaphores </br>
+[INC](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/summer/INC): Acces Terminal </br>
+[IJC](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/summer/IJC): Stenographic decoder, Sieve of Eratosthenes, Wordcounter...</br>
+[IVS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/1BIT/summer/IVS): Team project - Simple calculator in Python </br>
 
 ### 2BIT winter
-[IFJ](https://github.com/ProsteMato/IFJ-Team-Kakashi) Compiler </br>
-[INP](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/winter/INP) Matrix display, Simple instruction set processor</br>
-[ITU](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/winter/ITU) Wifi tracker</br>
-[ISS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/winter/ISS) Speech proccesing </br>
-[IPS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/winter/IPS) My Malloc, Parallel grep </br>
+[IFJ](https://github.com/ProsteMato/IFJ-Team-Kakashi): Compiler </br>
+[INP](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/winter/INP): Matrix display, Simple instruction set processor</br>
+[ITU](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/winter/ITU): Wifi tracker</br>
+[ISS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/winter/ISS): Speech proccesing </br>
+[IPS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/winter/IPS): My Malloc, Parallel grep </br>
 
 ### 2BIT summer
-[IDS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/summer/IDS) Database implementation of Magic World </br>
-[IPK](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/summer/IPK) HTTP resolver, Packet sniffer </br>
-[IPP](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/summer/IPP) Interpreter </br>
-[IJA](https://github.com/ProsteMato/IJA/tree/master/traffic-simulator) Public Transport Simulator </br>
-[ITS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/summer/ITS) Test scenarios, Test suite </br>
+[IDS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/summer/IDS): Database implementation of Magic World </br>
+[IPK](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/summer/IPK): HTTP resolver, Packet sniffer </br>
+[IPP](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/summer/IPP): Interpreter </br>
+[IJA](https://github.com/ProsteMato/IJA/tree/master/traffic-simulator): Public Transport Simulator </br>
+[ITS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/2BIT/summer/ITS): Test scenarios, Test suite </br>
 
 ### 3BIT winter
 [IMS](https://github.com/MisoKov/vutbr-fit-bit/tree/main/3BIT/IMS): COVID-19 cellular automaton simulation </br>
