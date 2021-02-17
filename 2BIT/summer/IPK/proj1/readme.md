@@ -1,16 +1,7 @@
 # Projekt 1 - HTTP resolver of domain names
 ---
 Student project for Computer Communications and Networks course at FIT VUTBR. The aim of project is to create simple HTTP resolver of domain namees and IPv4 addresses.
-# Table of Contents
-1. [Design](###Design)
-    1. [Client return codes](#####Clien-return-codes)
-    2. [Input requests](#####Input-requests)
-    3. [Libraries](#####Libraries)
-    4. [Shutting down](#####Shutting-down)
-    5. [Functions](#####Functions)
-2. [Prerequisites](###Prerequisites)
-3. [Building](###Building)
-4. [Author](###Author)
+
 ### Design
 ---
 The application is written in Python. For server for used `socket` module. Program firsly checks the arguments for PORT number validity. Then server starts running and listenning. After HTTP request is recieved it is checked for validity and if all tests pass the server tries to resolve the domain name. Only supported requests are `GET` and `POST`. The program is shut down when `CTRL+C` is pressed in terminal.
